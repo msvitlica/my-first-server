@@ -1,0 +1,23 @@
+{
+  "name": "my-first-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "test",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/msvitlica/my-first-server.git"
+  },
+  "author": "milan svitlica",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/msvitlica/my-first-server/issues"
+  },
+  "homepage": "https://github.com/msvitlica/my-first-server#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
