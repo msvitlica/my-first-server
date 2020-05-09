@@ -1,22 +1,35 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
 const app = express();
 const port = 3000;
-app.get('/', (req, res) => {
-    res.send('Hello World, from express');
+
+app.use(cors());
+
+// Configuring body parser middleware
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+const newsList = [];
+
+app.get('/', (req, res) => {   
+   
+    res.json(newsList);
+    
 });
-app.get('/dobar-dan', (req, res) => {
-    res.send('Dobri denj ' + req.query.name);
+app.post('/', (req, res)=>
+{
+    const news = req.body;
+
+    newsList.push(news);
+
+    res.send('news added');
+
 });
-app.get('/books', (req, res) => {
-    let q = req.query.q;
-    let books =  [
-        {name:"Na Drini Cuprija", year:1987},
-     {name:"Prohujalo sa", year:1855}];     
-     if(q){
-    res.send(books.filter(b => b.name.startsWith(q)));
-     }
-     else{
-         res.send(books);
-     }
-});
-app.listen(port, () => console.log('Hello world app listening on port ${port}!'))
+
+app.listen(port, () => {
+    
+    console.log(`Hello world app listening on port ${port}!`)
+    newsList.push({title:'Kovid 19', content:'Prema najnovijim informacijama, u poslednja 24 sata u Srbiji testirano je 5.728 uzoraka osoba koje su zadovoljavale kriterijume slučaja, od čega je 89 pozitivnih'});
+}
+);
