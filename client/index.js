@@ -1,4 +1,4 @@
-function onLoad(){
+function onLoad() {
     const xhttp = new XMLHttpRequest();
 
     xhttp.open("GET", "http://localhost:3000/", false);
@@ -9,23 +9,28 @@ function onLoad(){
 
     document.getElementById('news').innerHTML = '';
 
-    for (let news of newsList) {
+    newsList.forEach((news) => {
+        const articleDiv = document.createElement('div');
+        articleDiv.className = 'col-4';
         const x = `
-            <div class="col-4">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">${news.title}</h5>
                         <h6>${news.content}</h6>
+                        <button id="modify${news.id}">Izmjeni</button>
+                        <button id="delete${news.id}">Obriši</button>
                     </div>
                 </div>
-            </div>
         `
-        document.getElementById('news').innerHTML += x;
-    }
-        
+        articleDiv.innerHTML = x;
+        document.getElementById('news').appendChild(articleDiv);
+        const deleteNewsBtn = document.getElementById(`delete${news.id}`);
+        deleteNewsBtn.addEventListener('click', () => { deleteNews(news.id) });
+    });
+
 }
 
-function addNews(){
+function addNews() {
     const xhttp = new XMLHttpRequest();
 
     const title = document.getElementById('title').value;
@@ -36,19 +41,27 @@ function addNews(){
         content: content,
     }
 
-    xhttp.open('POST',"http://localhost:3000/",false);
+    xhttp.open('POST', "http://localhost:3000/", false);
     xhttp.setRequestHeader("Content-type", "application/json");
-    xhttp.send(JSON.stringify(news));    
+    xhttp.send(JSON.stringify(news));
 
     close();
     this.onLoad();
 }
 
-function openDialog(){
+function deleteNews(id) {
+    const xhttp = new XMLHttpRequest();
+
+    xhttp.open('DELETE', `http://localhost:3000/${id}`, false);
+    xhttp.send();
+    onLoad();
+}
+
+function openDialog() {
     document.getElementById('addNewsDialog').style.display = 'block';
 }
 
-function close() {   
+function close() {
     document.getElementById('addNewsDialog').style.display = 'none';
 }
 
