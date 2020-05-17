@@ -30,7 +30,7 @@ function onLoad() {
         deleteNewsBtn.addEventListener('click', () => { onDeleteNewsClick(n.id) });
         modifyNewsBtn.addEventListener('click', () => { onEditNewsClick(n.id) });
     });
-
+    console.log(this);
 }
 
 function addNews() {
