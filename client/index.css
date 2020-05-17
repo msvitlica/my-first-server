@@ -1,0 +1,20 @@
+.testModal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    width: 70%;
+    height: 50%;
+    overflow: auto;
+    background-color: rgb(61, 190, 168);
+    
+}
+.delete_edit_modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    width: 30%;
+    height: 30%;
+    overflow: auto;
+    background-color: rgb(114, 228, 209);
+    
+}
