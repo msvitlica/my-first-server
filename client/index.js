@@ -1,30 +1,5 @@
 function onLoad(){
     displayNews();
-   /* const newsList = JSON.parse(xhttp.responseText);
-
-    let divContainer=  document.getElementById('news');
-    divContainer.innerHTML = '';
-    
-    newsList.forEach(news=>{
-        let newsDiv = document.createElement('div');
-        newsDiv.className ='col-4';
-        const x = `
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">${news.title}</h5>
-                        <h6>${news.content}</h6>
-                        <button id="deleteNews' +${news.id} +'">Obrisi</button>
-                        <button id="editNews' + ${news.id}+'">Izmijeni</button>                 
-                   </div>
-                </div>
-        ` 
-        newsDiv.innerHTML = x;
-        divContainer.appendChild(newsDiv);
-        const deleteBtn = document.getElementById(`deleteNews' +${news.id} +'`);
-        deleteBtn.addEventListener('click', function () { deleteNews(news.id) });
-      // const editBtn = document.getElementById(`editNews' + ${news.id}+' `);
-       // editBtn.addEventListener('click', function () { editNews(news.id) });
-    });*/
 };
 
 function addNews(){
