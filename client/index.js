@@ -1,3 +1,4 @@
+let news;
 function onLoad() {
     const xhttp = new XMLHttpRequest();
 
@@ -9,23 +10,25 @@ function onLoad() {
 
     document.getElementById('news').innerHTML = '';
 
-    newsList.forEach((news) => {
+    newsList.forEach(n => {
         const articleDiv = document.createElement('div');
         articleDiv.className = 'col-4';
         const x = `
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">${news.title}</h5>
-                        <h6>${news.content}</h6>
-                        <button id="modify${news.id}">Izmjeni</button>
-                        <button id="delete${news.id}">Obriši</button>
+                        <h5 class="card-title">${n.title}</h5>
+                        <h6>${n.content}</h6>
+                        <button id="modify${n.id}">Izmjeni</button>
+                        <button id="delete${n.id}">Obriši</button>
                     </div>
                 </div>
         `
         articleDiv.innerHTML = x;
         document.getElementById('news').appendChild(articleDiv);
-        const deleteNewsBtn = document.getElementById(`delete${news.id}`);
-        deleteNewsBtn.addEventListener('click', () => { deleteNews(news.id) });
+        const deleteNewsBtn = document.getElementById(`delete${n.id}`);
+        const modifyNewsBtn = document.getElementById(`modify${n.id}`);
+        deleteNewsBtn.addEventListener('click', () => { onDeleteNewsClick(n.id) });
+        modifyNewsBtn.addEventListener('click', () => { onEditNewsClick(n.id) });
     });
 
 }
@@ -36,20 +39,32 @@ function addNews() {
     const title = document.getElementById('title').value;
     const content = document.getElementById('content').value;
 
-    let news = {
-        title: title,
-        content: content,
+    if(!news) {
+        news = {
+            title: title,
+            content: content,
+        }
+    
+        xhttp.open('POST', "http://localhost:3000/", false);
+        xhttp.setRequestHeader("Content-type", "application/json");
+        xhttp.send(JSON.stringify(news));
+        news = null;
+    }
+    else {
+        news.title = title;
+        news.content = content;
+
+        xhttp.open('PUT', `http://localhost:3000/${news.id}`, false);
+        xhttp.setRequestHeader('Content-type', 'application/json');
+        xhttp.send(JSON.stringify(news));
+        news = null;
     }
 
-    xhttp.open('POST', "http://localhost:3000/", false);
-    xhttp.setRequestHeader("Content-type", "application/json");
-    xhttp.send(JSON.stringify(news));
-
     close();
-    this.onLoad();
+    onLoad();
 }
 
-function deleteNews(id) {
+function onDeleteNewsClick(id) {
     const xhttp = new XMLHttpRequest();
 
     xhttp.open('DELETE', `http://localhost:3000/${id}`, false);
@@ -57,11 +72,31 @@ function deleteNews(id) {
     onLoad();
 }
 
+function onEditNewsClick(id) {
+    const xhttp = new XMLHttpRequest();
+
+    xhttp.open('GET', `http://localhost:3000/${id}`, false);
+    xhttp.send();
+    news = JSON.parse(xhttp.responseText);
+    const newsTitle = document.getElementById('title');
+    const newsContent = document.getElementById('content');
+    newsTitle.value = news.title;
+    newsContent.value = news.content;
+    openDialog();
+}
+function clearModalForm() {
+    document.getElementById('title').value = '';
+    document.getElementById('content').value = '';
+}
+const closeModal = document.getElementById('closeModal');
+closeModal.addEventListener('click', close);
+
 function openDialog() {
     document.getElementById('addNewsDialog').style.display = 'block';
 }
 
 function close() {
     document.getElementById('addNewsDialog').style.display = 'none';
+    clearModalForm();
 }
 

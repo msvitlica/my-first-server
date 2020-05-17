@@ -18,6 +18,9 @@ app.get('/', (req, res) => {
     res.json(newsList);
     
 });
+
+// Adding new article request
+
 app.post('/', (req, res)=>
 {
     const news = req.body;
@@ -29,12 +32,35 @@ app.post('/', (req, res)=>
 
 });
 
+// News deleting request
+
 app.delete('/:id', (req, res) => {
     const newsId = req.params.id;
 
     newsList = newsList.filter(news => news.id !== newsId);
     res.json(newsList);
     console.log(`News with id of ${newsId} has been deleted!`);
+});
+
+// News editing request
+
+app.get('/:id', (req, res) => {
+    const articleId = req.params.id;
+    const article = newsList.filter(a => articleId === a.id)[0];
+    res.send(article);
+});
+
+app.put('/:id', (req, res) => {
+    const editedArticle = req.body;
+    newsList.forEach(a => {
+        if(a.id === req.params.id){
+            a.title = editedArticle.title;
+            a.content = editedArticle.content;
+        }
+    });
+    res.send('Article updated!');
+    
+    
 });
 
 app.listen(port, () => {
