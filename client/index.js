@@ -14,7 +14,9 @@ function addNews(){
 
     xhttp.open('POST',"http://localhost:3000/",false);
     xhttp.setRequestHeader("Content-type", "application/json");
-    xhttp.send(JSON.stringify(news));  
+    xhttp.send(JSON.stringify(news));
+    
+    alert(xhttp.responseText);
    
 
     close();

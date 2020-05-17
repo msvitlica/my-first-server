@@ -9,36 +9,49 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-const newsList = [];
+let newsList = [];
 
 app.get('/', (req, res) => {   
     const news = req.body;
-    res.json(newsList);
-    
+    res.json(newsList);    
 });
+
+app.get('/', (req, res) => {   
+    const news = req.body;
+    res.json(newsList);    
+});
+
 app.post('/', (req, res)=>
 {
     const news = req.body;
-      news.id=  Math.random();
+    news.id= newsList.length;
     newsList.push(news);
 
-     res.json(newsList);
+    res.json('news created success');
     console.log(news);
 
 });
-app.delete('/:id',(req,res)=>{
+app.delete('/:id',(req,res)=>{   
     const newsId = req.params.id;
-    const deletedNews= newsList.filter(el=>{el.id!== Number(newsId);
-    res.json(deletedNews);
-    console.log(deletedNews);
-
+    console.log(newsId)
+    newsList = newsList.filter((el) => {
+        if (el.id !== parseInt(newsId)) {
+            return el;
+        }
+    });    
+    console.log(newsList.length);
+    res.send('deleted id'+newsId);
 });
 
 app.listen(port, () => {
     
     console.log(`Hello world app listening on port ${port}!`)
-    newsList.push({title:'Kovid 19', content:'Prema najnovijim informacijama, u poslednja 24 sata u Srbiji testirano je 5.728 uzoraka osoba koje su zadovoljavale kriterijume slučaja, od čega je 89 pozitivnih', id:Math.random(),});
+    newsList.push({
+        id:0, 
+        title:'Kovid 19',
+        content:'Prema najnovijim informacijama, u poslednja 24 sata u Srbiji testirano je 5.728 uzoraka osoba koje su zadovoljavale kriterijume slučaja, od čega je 89 pozitivnih'
+    });
 
-})
 });
+
 
