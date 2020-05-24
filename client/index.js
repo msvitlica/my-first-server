@@ -1,53 +1,57 @@
+
 function onLoad(){
     displayNews();
 };
 
-function addNews(){
+function addNews() {
     const xhttp = new XMLHttpRequest();
     const title = document.getElementById('title').value;
     const content = document.getElementById('content').value;
-
-    let news = {
+     const news = {
         title: title,
         content: content,
     }
-
-    xhttp.open('POST',"http://localhost:3000/",false);
+    xhttp.open('POST', "http://localhost:3000/", false);
     xhttp.setRequestHeader("Content-type", "application/json");
     xhttp.send(JSON.stringify(news));
-    
-    alert(xhttp.responseText);
-   
-
     close();
-    document.getElementById('title').value='';
-    document.getElementById('content').value='';
-    this.onLoad();
+    onLoad();
 }
-
 function openDialog(){
     document.getElementById('addNewsDialog').style.display = 'block';
-}
-
-function close() {   
+  }
+function close() {                                 
     document.getElementById('addNewsDialog').style.display = 'none';
+    deleteInputFields();
+}
+function deleteInputFields(){
+    document.getElementById('title').value='';
+    document.getElementById('content').value='';
 }
 
 function deleteNews(id){
     const xhttp = new XMLHttpRequest(); 
     xhttp.open('DELETE', `http://localhost:3000/${id}`,false);
     xhttp.send();
-    this.onLoad();
+    onLoad();
     
 }
 
-function editNews(){
-    
+function editNews(id){
+    const xhttp = new XMLHttpRequest();
+    xhttp.open('GET', `http://localhost:3000/${id}`,false);
+    xhttp.send();
+    const news= JSON.parse(xhttp.responseText);
+    const title = document.getElementById('title').value;
+    const content = document.getElementById('content').value;
+    news.title= title;
+    news.content= content;
+    openDialog();
 }
 function displayNews(){
    const xhttp = new XMLHttpRequest();
-    xhttp.open("GET", "http://localhost:3000/", false);
-    xhttp.send()
+   xhttp.open("GET", "http://localhost:3000/", false);
+   xhttp.send();
     const newsList = JSON.parse(xhttp.responseText);
     let divContainer=  document.getElementById('news');
     divContainer.innerHTML = '';
@@ -60,16 +64,16 @@ function displayNews(){
                     <div class="card-body">
                         <h5 class="card-title">${news.title}</h5>
                         <h6>${news.content}</h6>
-                        <button id="deleteNews' +${news.id} +'">Obrisi</button>
-                        <button id="editNews' + ${news.id}+'">Izmijeni</button>                 
+                        <button id= "deleteNews${news.id}">Obrisi</button>
+                        <button id= "editNews${news.id}">Izmijeni</button>                 
                    </div>
                 </div>
         ` 
         newsDiv.innerHTML = x;
         divContainer.appendChild(newsDiv);
-        const deleteBtn = document.getElementById(`deleteNews' +${news.id} +'`);
+        const deleteBtn = document.getElementById(`deleteNews${news.id}`);
         deleteBtn.addEventListener('click', function () { deleteNews(news.id) });
-      // const editBtn = document.getElementById(`editNews' + ${news.id}+' `);
-       // editBtn.addEventListener('click', function () { editNews(news.id) });
+       const editBtn = document.getElementById(`editNews${news.id}`);
+       editBtn.addEventListener('click', function () { editNews(news.id)});
     });
-}
+};
