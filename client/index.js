@@ -7,16 +7,17 @@ function addNews() {
     const xhttp = new XMLHttpRequest();
     const title = document.getElementById('title').value;
     const content = document.getElementById('content').value;
-     const news = {
+     news = {
         title: title,
         content: content,
-    }
-    xhttp.open('POST', "http://localhost:3000/", false);
+     }
+    xhttp.open('POST', 'http://localhost:3000/', false);
     xhttp.setRequestHeader("Content-type", "application/json");
     xhttp.send(JSON.stringify(news));
     close();
     onLoad();
 }
+
 function openDialog(){
     document.getElementById('addNewsDialog').style.display = 'block';
   }
@@ -42,10 +43,10 @@ function editNews(id){
     xhttp.open('GET', `http://localhost:3000/${id}`,false);
     xhttp.send();
     const news= JSON.parse(xhttp.responseText);
-    const title = document.getElementById('title').value;
-    const content = document.getElementById('content').value;
-    news.title= title;
-    news.content= content;
+    const title = document.getElementById('title');
+    const content = document.getElementById('content');
+     title.value= news.title;
+     content.value= news.content;
     openDialog();
 }
 function displayNews(){

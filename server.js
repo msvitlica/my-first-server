@@ -21,7 +21,7 @@ app.post('/', (req, res) => {
     news.id = uuid.v4();
     newsList.push(news);
 
-    res.json('news created success');
+    res.json(newsList);
     console.log(news);
 
 });
@@ -40,13 +40,13 @@ app.get('/:id', (req,res)=>{
 })
 app.put('/:id',(req,res)=>{
     const newsBody= req.body;
-    newsList= newsList.forEach(el=>{
+    newsList = newsList.forEach(el=>{
         if( el.id=== req.params.id){
             el.title= newsBody.title;
             el.content= newsBody.content;
         }
     });
-    res.send(newsList);
+    res.json(newsList);
 })
 
 
