@@ -7,10 +7,13 @@ function onLoad() {
 
     const newsList = JSON.parse(xhttp.responseText);
 
+    displayNews(newsList);
+}
 
+function displayNews(array){
     document.getElementById('news').innerHTML = '';
 
-    newsList.forEach(n => {
+    array.forEach(n => {
         const articleDiv = document.createElement('div');
         articleDiv.className = 'col-4';
         const x = `
@@ -30,7 +33,6 @@ function onLoad() {
         deleteNewsBtn.addEventListener('click', () => { onDeleteNewsClick(n.id) });
         modifyNewsBtn.addEventListener('click', () => { onEditNewsClick(n.id) });
     });
-    console.log(this);
 }
 
 function addNews() {
@@ -100,3 +102,17 @@ function close() {
     clearModalForm();
 }
 
+function newsSearch() {
+    let queryParametar = document.getElementById('search').value;
+    let xhttp = new XMLHttpRequest();
+
+    xhttp.open('GET', `http://localhost:3000/search?q=${queryParametar}`, false);
+    xhttp.send();
+
+    const response = JSON.parse(xhttp.response);
+
+    displayNews(response);
+}
+
+const searchBtn = document.getElementById('searchBtn');
+searchBtn.addEventListener('click', newsSearch);
