@@ -14,6 +14,7 @@ let newsList = [];
 
 app.get('/', (req, res) => {
     res.json(newsList);
+    res.send(newsList);
 });
 
 app.post('/', (req, res) => {
@@ -36,11 +37,10 @@ app.get('/:id', (req,res)=>{
     const newsId= req.params.id;
     newsList= newsList.filter(el=> el.id=== newsId)[0];
     res.send(newsList);
-    console.log("news edited!");
 })
 app.put('/:id',(req,res)=>{
     const newsBody= req.body;
-    newsList = newsList.forEach(el=>{
+newsList = newsList.forEach(el=>{
         if( el.id=== req.params.id){
             el.title= newsBody.title;
             el.content= newsBody.content;

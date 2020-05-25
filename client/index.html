@@ -11,7 +11,7 @@
 </head>
 
 <body onload="onLoad()">
-    <div>
+    <div>  
         <h1>News List</h1>
         <div class="row" id="news">
         </div>
@@ -21,8 +21,9 @@
     <button onclick="openDialog()">Dodaj vjest</button>
 
 
-    <div id="addNewsDialog" class="testModal">
+    <div id="addNewsDialog" class="testModal"> 
         <div>
+            <div><span  class="closeModal" onclick="closeDialog()">&times;</span></div>
             <div class="form-group">
                 <label for="exampleInputPassword1">Title</label>
                 <input class="form-control" name="title" id="title">
@@ -32,6 +33,20 @@
                 <textarea class="form-control" name="content" id="content"></textarea>
             </div>
             <button class="saveTestBtn" id="addTestBtn" onclick="addNews()">Unesi Vijest</button>
+        </div>
+    </div>
+    <div id="addEditedNewsDialog" class="editModal"> 
+        <div>
+            <div><span  class="closeModal" onclick="closeEditDialog()">&times;</span></div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Title</label>
+                <input class="form-control" name="title" id="_title">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Content</label>
+                <textarea class="form-control" name="content" id="_content"></textarea>
+            </div>
+            <button class="saveTestBtn" id="addTestBtn" onclick="addEditedNews(id)">Unesi izmijenjenu Vijest</button>
         </div>
     </div>
    

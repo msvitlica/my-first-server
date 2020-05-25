@@ -18,3 +18,19 @@
     background-color: rgb(114, 228, 209);
     
 }
+.closeModal{
+    color: rgb(17, 16, 16);
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+.editModal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    width: 70%;
+    height: 50%;
+    overflow: auto;
+    background-color: rgb(61, 190, 100);
+    
+}
