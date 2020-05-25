@@ -47,7 +47,7 @@ app.get('/search', (req, res) => {
     const queryParam = req.query.q;
 
     let searchedContent = newsList.filter(news => {
-        if(news.title.includes(queryParam) || news.content.includes(queryParam)){
+        if(news.title.toLowerCase().includes(queryParam.toLowerCase()) || news.content.toLowerCase().includes(queryParam.toLowerCase())){
             return news;
         }
     });
