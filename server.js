@@ -22,7 +22,7 @@ app.post('/', (req, res) => {
     news.id = uuid.v4();
     newsList.push(news);
 
-    res.json(newsList);
+    res.json(news);
     console.log(news);
 
 });
@@ -37,11 +37,13 @@ app.get('/:id', (req,res)=>{
     const newsId= req.params.id;
     newsList= newsList.filter(el=> el.id=== newsId)[0];
     res.send(newsList);
+    console.log(newsList);
 })
 app.put('/:id',(req,res)=>{
     const newsBody= req.body;
+    const newsId= req.params.id;
 newsList = newsList.forEach(el=>{
-        if( el.id=== req.params.id){
+        if( el.id=== newsId){
             el.title= newsBody.title;
             el.content= newsBody.content;
         }

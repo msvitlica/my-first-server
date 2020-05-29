@@ -19,17 +19,16 @@ function addNews() {
     onLoad();
 }
 function addEditedNews(id){
-    let news={};
     const xhttp= new XMLHttpRequest();
-    const title = document.getElementsByClassName('_title');
-    const content = document.getElementById('_content');
-      news.title = title.value;
-     news.content= content.value;
-
+    const title = document.getElementsByClassName('_title').value;
+    const content = document.getElementById('_content').value;
+    news={
+     title: title,
+     content:content,
+    }
     xhttp.open('PUT', `http://localhost:3000/${id}`,false);
     xhttp.setRequestHeader("Content-type", "application/json");
     xhttp.send(JSON.stringify(news));
-    closeAndDeleteInput();
     onLoad();
 }
 
