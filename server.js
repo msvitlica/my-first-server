@@ -1,22 +1,25 @@
 const express = require('express');
+var http = require('http');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const app = express();
 const uuid = require('uuid');
 const port = 3000;
-app.use(cors());
+
 
 // Configuring body parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(cors());
 
 let newsList = [];
 
+// get all news 
 app.get('/', (req, res) => {
     res.json(newsList);
     res.send(newsList);
 });
-
+// add news
 app.post('/', (req, res) => {
     const news = req.body;
     news.id = uuid.v4();
@@ -26,6 +29,8 @@ app.post('/', (req, res) => {
     console.log(news);
 
 });
+
+// delete news
 app.delete('/:id', (req, res) => {
     const newsId = req.params.id;
     newsList=newsList.filter(el => el.id !== newsId);
@@ -33,6 +38,7 @@ app.delete('/:id', (req, res) => {
     console.log("news deleted.");
 });
 
+// update news
 app.get('/:id', (req,res)=>{
     const newsId= req.params.id;
     newsList= newsList.filter(el=> el.id=== newsId)[0];
@@ -41,16 +47,28 @@ app.get('/:id', (req,res)=>{
 })
 app.put('/:id',(req,res)=>{
     const newsBody= req.body;
-    const newsId= req.params.id;
 newsList = newsList.forEach(el=>{
-        if( el.id=== newsId){
+        if( el.id=== req.params.id){
             el.title= newsBody.title;
             el.content= newsBody.content;
         }
     });
     res.json(newsList);
+    console.log(newsList);
 })
+// search news
+app.get('/search',(req,res)=>{
+    const x= req.query.x;
+    newsList= newsList.filter(el=>{
 
+   if( el.title.toLowerCase().includes(x) || el.content.toLowerCase().includes(x)){
+       return el;
+   };
+
+});
+    res.json( newsList);
+    console.log(newsList);
+});
 
 app.listen(port, () => {
 

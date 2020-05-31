@@ -7,11 +7,16 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Create New Book</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="index.css">
 </head>
 
 <body onload="onLoad()">
-    <div>  
+    <nav>
+        <button onclick="findSearchedNews()"><i class="fa fa-search" style="color:turquoise"></i></button>
+        <input type="text" id='search' plceholder="Pretraga">
+    </nav>
+    <div>
         <h1>News List</h1>
         <div class="row" id="news">
         </div>
@@ -33,20 +38,6 @@
                 <textarea class="form-control" name="content" id="content"></textarea>
             </div>
             <button class="saveTestBtn" id="addTestBtn" onclick="addNews()">Unesi Vijest</button>
-        </div>
-    </div>
-    <div id="addEditedNewsDialog" class="editModal"> 
-        <div>
-            <div><span  class="closeModal" onclick="closeEditDialog()">&times;</span></div>
-            <div class="form-group">
-                <label for="exampleInputPassword2">Title</label>
-                <input class="form-control" name="title" id="_title">
-            </div>
-            <div class="form-group">
-                <label for="exampleInputPassword2">Content</label>
-                <textarea class="form-control" name="content" id="_content"></textarea>
-            </div>
-            <button class="saveTestBtn" id="addEditedTestBtn" onclick="addEditedNews()">Unesi izmijenjenu Vijest</button>
         </div>
     </div>
    
