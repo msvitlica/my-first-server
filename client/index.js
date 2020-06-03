@@ -50,7 +50,7 @@ function editNews(id){
 function findSearchedNews() {
     const xhttp= new XMLHttpRequest();
     const searchedNews = document.getElementById('search').value;
-    xhttp.open('GET', `http://localhost:3000/search?x=${searchedNews}`,false);
+    xhttp.open('GET', `http://localhost:3000/find?x=${searchedNews}`,false);
     xhttp.send();
     const result =JSON.parse(xhttp.responseText);
     displayResults(result);

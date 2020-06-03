@@ -13,6 +13,19 @@ app.use(bodyParser.json());
 app.use(cors());
 
 let newsList = [];
+// search news
+app.get('/find',(req,res)=>{
+    const x= req.query.x;
+    newsList= newsList.filter(el=>{
+
+   if( el.title.toLowerCase().includes(x) || el.content.toLowerCase().includes(x)){
+       return el;
+   };
+
+});
+    res.json( newsList);
+    console.log(newsList);
+});
 
 // get all news 
 app.get('/', (req, res) => {
@@ -56,19 +69,6 @@ newsList = newsList.forEach(el=>{
     res.json(newsList);
     console.log(newsList);
 })
-// search news
-app.get('/search',(req,res)=>{
-    const x= req.query.x;
-    newsList= newsList.filter(el=>{
-
-   if( el.title.toLowerCase().includes(x) || el.content.toLowerCase().includes(x)){
-       return el;
-   };
-
-});
-    res.json( newsList);
-    console.log(newsList);
-});
 
 app.listen(port, () => {
 
