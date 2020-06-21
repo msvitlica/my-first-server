@@ -13,19 +13,22 @@ app.use(bodyParser.json());
 app.use(cors());
 
 let newsList = [];
+
+// get all news 
+app.get('/all', (req, res) => {
+    res.json(newsList);   
+});
+
 // search news
 app.get('/find', (req, res) => {
-    const x = req.query.x;
+    const x = req.query.x.toLowerCase();
     const result = newsList.filter(el => 
         el.title.toLowerCase().includes(x) || el.content.toLowerCase().includes(x)
         );
     res.json( result);    
 });
 
-// get all news 
-app.get('/', (req, res) => {
-    res.json(newsList);   
-});
+
 // add news
 app.post('/', (req, res) => {
     const news = req.body;

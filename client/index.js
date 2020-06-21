@@ -59,7 +59,7 @@ function findSearchedNews() {
 
 function displayNews() {
     const xhttp = new XMLHttpRequest();
-    xhttp.open("GET", "http://localhost:3000/", false);
+    xhttp.open("GET", "http://localhost:3000/all", false);
     xhttp.send();
     let newsList = JSON.parse(xhttp.responseText);
     let divContainer = document.getElementById('news');
