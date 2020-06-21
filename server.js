@@ -29,8 +29,7 @@ app.get('/find',(req,res)=>{
 
 // get all news 
 app.get('/', (req, res) => {
-    res.json(newsList);
-    res.send(newsList);
+    res.json(newsList);   
 });
 // add news
 app.post('/', (req, res) => {
@@ -47,20 +46,21 @@ app.post('/', (req, res) => {
 app.delete('/:id', (req, res) => {
     const newsId = req.params.id;
     newsList=newsList.filter(el => el.id !== newsId);
-    res.send(newsList);
-    console.log("news deleted.");
+    res.send(newsList);    
 });
 
 // update news
 app.get('/:id', (req,res)=>{
     const newsId= req.params.id;
-    newsList= newsList.filter(el=> el.id=== newsId)[0];
-    res.send(newsList);
-    console.log(newsList);
+const result = newsList.filter(el=> el.id=== newsId)[0];
+    res.send(result);
+    console.log(result);
 })
 app.put('/:id',(req,res)=>{
+    console.log(req.params.id);
     const newsBody= req.body;
-newsList = newsList.forEach(el=>{
+    console.log(newsList);
+    newsList.forEach(el=>{
         if( el.id=== req.params.id){
             el.title= newsBody.title;
             el.content= newsBody.content;

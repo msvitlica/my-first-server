@@ -1,4 +1,4 @@
-var news={};
+var news = {};
 function onLoad() {
     displayNews();
 };
@@ -7,67 +7,67 @@ function addNews() {
     const xhttp = new XMLHttpRequest();
     const title = document.getElementById('title').value;
     const content = document.getElementById('content').value;
-        if(news.id){
-            news.title= title;
-            news.content= content;
-    
-            xhttp.open('PUT', `http://localhost:3000/${id}`,false);
-            xhttp.setRequestHeader("Content-type", "application/json");
-            xhttp.send(JSON.stringify(news));
-            news={};
-        }
-       else{ 
-           news = {
-        title: title,
-        content: content,
+    if (news.id) {
+        news.title = title;
+        news.content = content;
+
+        xhttp.open('PUT', `http://localhost:3000/${news.id}`, false);
+        xhttp.setRequestHeader("Content-type", "application/json");
+        xhttp.send(JSON.stringify(news));
+        news = {};
     }
-    xhttp.open('POST', 'http://localhost:3000/', false);
-    xhttp.setRequestHeader("Content-type", "application/json");
-    xhttp.send(JSON.stringify(news));
-    news={};
-}   
+    else {
+        news = {
+            title: title,
+            content: content,
+        }
+        xhttp.open('POST', 'http://localhost:3000/', false);
+        xhttp.setRequestHeader("Content-type", "application/json");
+        xhttp.send(JSON.stringify(news));
+        news = {};
+    }
     close();
     onLoad();
 }
-function deleteNews(id){
-    const xhttp = new XMLHttpRequest(); 
-    xhttp.open('DELETE', `http://localhost:3000/${id}`,false);
+function deleteNews(id) {
+    const xhttp = new XMLHttpRequest();
+    xhttp.open('DELETE', `http://localhost:3000/${id}`, false);
     xhttp.send();
-    onLoad();  
+    onLoad();
 }
 
-function editNews(id){
+function editNews(id) {
     const xhttp = new XMLHttpRequest();
-    xhttp.open('GET', `http://localhost:3000/${id}`,false);
+    xhttp.open('GET', `http://localhost:3000/${id}`, false);
     xhttp.send();
-    news= JSON.parse(xhttp.responseText);
+    news = JSON.parse(xhttp.responseText);
     const title = document.getElementById('title');
     const content = document.getElementById('content');
-     title.value= news.title;
-     content.value= news.content;
-     openDialog();
+    title.value = news.title;
+    content.value = news.content;
+    openDialog();
 }
 function findSearchedNews() {
-    const xhttp= new XMLHttpRequest();
+    const xhttp = new XMLHttpRequest();
     const searchedNews = document.getElementById('search').value;
-    xhttp.open('GET', `http://localhost:3000/find?x=${searchedNews}`,false);
+    xhttp.open('GET', `http://localhost:3000/find?x=${searchedNews}`, false);
     xhttp.send();
-    const result =JSON.parse(xhttp.responseText);
+    const result = JSON.parse(xhttp.responseText);
     displayResults(result);
 
 }
 
-function displayNews(){
+function displayNews() {
     const xhttp = new XMLHttpRequest();
     xhttp.open("GET", "http://localhost:3000/", false);
     xhttp.send();
-     let newsList = JSON.parse(xhttp.responseText);
-   let divContainer=  document.getElementById('news');
+    let newsList = JSON.parse(xhttp.responseText);
+    let divContainer = document.getElementById('news');
     divContainer.innerHTML = '';
-    
-newsList.forEach(news=>{
+
+    newsList.forEach(news => {
         let newsDiv = document.createElement('div');
-        newsDiv.className ='col-4';
+        newsDiv.className = 'col-4';
         const x = `
                 <div class="card">
                     <div class="card-body">
@@ -77,38 +77,38 @@ newsList.forEach(news=>{
                         <button id= "editNews${news.id}">Izmijeni</button>                 
                    </div>
                 </div>
-        ` 
+        `
         newsDiv.innerHTML = x;
         divContainer.appendChild(newsDiv);
         const deleteBtn = document.getElementById(`deleteNews${news.id}`);
         deleteBtn.addEventListener('click', function () { deleteNews(news.id) });
-       const editBtn = document.getElementById(`editNews${news.id}`);
-       editBtn.addEventListener('click', function () { editNews(news.id)});
+        const editBtn = document.getElementById(`editNews${news.id}`);
+        editBtn.addEventListener('click', function () { editNews(news.id) });
     });
 };
-function openDialog(){
+function openDialog() {
     document.getElementById('addNewsDialog').style.display = 'block';
-  }
-  function closeDialog(){
+}
+function closeDialog() {
     document.getElementById('addNewsDialog').style.display = 'none';
-  }
- 
-function close() {                                 
+}
+
+function close() {
     document.getElementById('addNewsDialog').style.display = 'none';
     deleteInputFields();
 }
 
-function deleteInputFields(){
-    document.getElementById('title').value='';
-    document.getElementById('content').value='';
+function deleteInputFields() {
+    document.getElementById('title').value = '';
+    document.getElementById('content').value = '';
 }
-function displayResults(resultArray){
-   let divContainer=  document.getElementById('news');
+function displayResults(resultArray) {
+    let divContainer = document.getElementById('news');
     divContainer.innerHTML = '';
-    
-resultArray.forEach(news=>{
+
+    resultArray.forEach(news => {
         let newsDiv = document.createElement('div');
-        newsDiv.className ='col-4';
+        newsDiv.className = 'col-4';
         const x = `
                 <div class="card">
                     <div class="card-body">
@@ -118,13 +118,13 @@ resultArray.forEach(news=>{
                         <button id= "editNews${news.id}">Izmijeni</button>                 
                    </div>
                 </div>
-        ` 
+        `
         newsDiv.innerHTML = x;
         divContainer.appendChild(newsDiv);
         const deleteBtn = document.getElementById(`deleteNews${news.id}`);
         deleteBtn.addEventListener('click', function () { deleteNews(news.id) });
-       const editBtn = document.getElementById(`editNews${news.id}`);
-       editBtn.addEventListener('click', function () { editNews(news.id)});
+        const editBtn = document.getElementById(`editNews${news.id}`);
+        editBtn.addEventListener('click', function () { editNews(news.id) });
     });
 };
 
