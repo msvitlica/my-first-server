@@ -14,17 +14,12 @@ app.use(cors());
 
 let newsList = [];
 // search news
-app.get('/find',(req,res)=>{
-    const x= req.query.x;
-    newsList= newsList.filter(el=>{
-
-   if( el.title.toLowerCase().includes(x) || el.content.toLowerCase().includes(x)){
-       return el;
-   };
-
-});
-    res.json( newsList);
-    console.log(newsList);
+app.get('/find', (req, res) => {
+    const x = req.query.x;
+    const result = newsList.filter(el => 
+        el.title.toLowerCase().includes(x) || el.content.toLowerCase().includes(x)
+        );
+    res.json( result);    
 });
 
 // get all news 
@@ -52,7 +47,10 @@ app.delete('/:id', (req, res) => {
 // update news
 app.get('/:id', (req,res)=>{
     const newsId= req.params.id;
-const result = newsList.filter(el=> el.id=== newsId)[0];
+    const result = newsList.filter(el=> el.id=== newsId)[0];
+    if(!result){
+        res.send('element not found');
+    }
     res.send(result);
     console.log(result);
 })
@@ -60,12 +58,12 @@ app.put('/:id',(req,res)=>{
     console.log(req.params.id);
     const newsBody= req.body;
     console.log(newsList);
-    newsList.forEach(el=>{
-        if( el.id=== req.params.id){
-            el.title= newsBody.title;
-            el.content= newsBody.content;
-        }
-    });
+
+    const elementToUpdate = newsList.filter(el => el.id === req.params.id)[0];
+   
+    elementToUpdate.title = newsBody.title;
+    elementToUpdate.content = newsBody.content;
+    
     res.json(newsList);
     console.log(newsList);
 })
